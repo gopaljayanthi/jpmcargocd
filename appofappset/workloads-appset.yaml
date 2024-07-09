@@ -63,17 +63,8 @@ spec:
             - name: vpcEndpointCidr
               value: somecidrs
             valueFiles:
-              - "$values/{{valuesPath}}"
-              - "$valueOverlay/{{valuesOverlayPath}}"
-        - repoURL: https://github.com/gopaljayanthi/jpmcargocd.git
-          targetRevision: master
-          ref: values
-        - repoURL: https://github.com/gopaljayanthi/jpmcargocd.git
-          targetRevision: master
-          ref: valueOverlay
-        - repoURL: '{{externalRepo}}'
-          targetRevision: '{{externalBranch}}'
-          path: '{{externalPath}}'
+              - "https://github.com/gopaljayanthi/jpmcargocd.git/{{valuesPath}}"
+              - "https://github.com/gopaljayanthi/jpmcargocd.git/{{valuesOverlayPath}}"
       destination:
         name: in-cluster
         namespace: '{{namespace}}'
