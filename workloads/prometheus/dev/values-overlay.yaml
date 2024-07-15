@@ -117,5 +117,8 @@ server:
           target_label: pod
         - source_labels: [__meta_kubernetes_pod_label_io_kubernetes_pod_name]
           action: replace
+          target_label: pod          
+        - source_labels: [container_label_io_kubernetes_pod_name]
+          action: replace
           target_label: pod
           
