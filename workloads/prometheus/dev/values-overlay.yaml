@@ -89,36 +89,11 @@ server:
         - source_labels:
               - __meta_kubernetes_namespace
           target_label: namespace
-      - job_name: 'kubernetes-pods'
+      - job_name: 'cadvisor'
         kubernetes_sd_configs:
-          - role: pod
-            namespaces:
-              names:
-              - cadvisor
+        - role: pod
         relabel_configs:
-        - action: keep
-          source_labels:
-            - __meta_kubernetes_pod_annotation_prometheus_io_scrape
-          regex: "true"
-        - action: replace
-          source_labels:
-            - __meta_kubernetes_pod_annotation_prometheus_io_path
-          target_label: __metrics_path__
-          regex: (.+)
-        - action: replace
-          source_labels:
-            - __address__
-            - __meta_kubernetes_pod_annotation_prometheus_io_port
-          target_label: __address__
-          regex: (.+):(?:\d+);(.+)
-          replacement: $1:$2
-        - source_labels: [__meta_kubernetes_pod_name]
-          action: replace
-          target_label: pod
-        - source_labels: [__meta_kubernetes_pod_label_io_kubernetes_pod_name]
-          action: replace
-          target_label: pod          
-        - source_labels: [__container_label_io_kubernetes_pod_name]
-          action: replace
-          target_label: pod
-          
+        - source_labels: [__meta_kubernetes_pod_label_name]
+          action: keep
+        regex: cadvisor
+
