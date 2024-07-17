@@ -9,6 +9,8 @@ metadata:
 data:
   policy.csv: |-
     g, devsync, role:devsync
+    p, role:devsync, applications, get, dev-project/*, allow
+    p, role:devsync, applications, sync, dev-project/*, allow
     g, qasync, role:qasync
     g, perfsync, role:perfsync
     g, uatsync, role:uatsync
