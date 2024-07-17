@@ -9,12 +9,20 @@ metadata:
 data:
   policy.csv: |-
     g, devsync, role:devsync
-    p, role:devsync, applications, get, dev-project/*, allow
+    p, role:devsync, applications, get, */*, allow
     p, role:devsync, applications, sync, dev-project/*, allow
     g, qasync, role:qasync
+    p, role:qasync, applications, get, */*, allow
+    p, role:qasync, applications, sync, qa-project/*, allow
     g, perfsync, role:perfsync
+    p, role:perfsync, applications, get, */*, allow
+    p, role:perfsync, applications, sync, perf-project/*, allow
     g, uatsync, role:uatsync
+    p, role:uatsync, applications, get, */*, allow
+    p, role:uatsync, applications, sync, uat-project/*, allow
     g, prodsync, role:prodsync
+    p, role:prodsync, applications, get, */*, allow
+    p, role:prodsync, applications, sync, prod-project/*, allow
     g, nosync, role:nosync
     p, role:nosync, applications, get, */*, allow
     g, nologs, role:nologs	
