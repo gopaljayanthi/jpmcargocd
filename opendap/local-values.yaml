@@ -1,3 +1,9 @@
+  global:
+  # Custom Images registry where all the OSS and customized images used in the helm chart are stored
+  # Only update this is using a private repo such as ACR, ECR, GCR, JFrog, etc.
+    customImages:
+      registry: quay.io/opsmxpublic
+    
   # Password for the admin user; by default it is set to admin
   adminPassword: opsmxadmin123
   configPassword: opsmxconfig123
