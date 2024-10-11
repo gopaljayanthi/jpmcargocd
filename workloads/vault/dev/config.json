@@ -1,0 +1,13 @@
+{
+  "repoURL": "https://helm.releases.hashicorp.com",
+  "targetRevision": "0.28.1",
+  "chart": "vault",
+  "valuesPath": "base/vault/values.yaml",
+  "valuesOverlayPath": "workloads/vault/dev/values-overlay.yaml",
+  "namespace": "vault",
+  "name": "vault",
+  "syncwave": "three",
+  "externalRepo": "https://github.com/gopaljayanthi/jpmc-external-files.git",
+  "externalBranch": "readyforargo",
+  "externalPath": "folder2/configmap"
+}
