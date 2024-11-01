@@ -3,6 +3,7 @@ data:
   foo: bar
   goo: war
   test: webhook
+  take: two
 kind: ConfigMap
 metadata:
   name: test-webhook
