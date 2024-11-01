@@ -42,8 +42,8 @@ spec:
       name: 'in-cluster-{{name}}'
       labels: 
         syncWave: '{{syncwave}}'
-      #annotations:
-      #  argocd.argoproj.io/sync-wave: {{ "'{{syncwave}}'" }}
+      annotations:
+        argocd.argoproj.io/compare-options: ServerSideDiff=true
     spec:
       project: default
       sources:
