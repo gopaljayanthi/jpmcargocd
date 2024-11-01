@@ -1,0 +1,73 @@
+apiVersion: v1
+data:
+  accounts.admin: login, apiKey
+  admin.enabled: "true"
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  dex.config: |-
+    logger:
+      level: debug
+    connectors:
+    - type: ldap
+      name: ldap.opsmx
+      id: ldap
+      config:
+        host: "openldap.ldap:389"
+        insecureNoSSL: true
+        insecureSkipVerify: true
+        bindDN: "$dex.ldap.bindDN"
+        bindPW: "$dex.ldap.bindPW"
+        usernamePrompt: Username
+        userSearch:
+          baseDN: "dc=example,dc=org"
+          filter: ""
+          username: cn
+          idAttr: cn
+          emailAttr: cn
+          nameAttr: cn
+        groupSearch:
+          baseDN: "ou=groups,dc=example,dc=org"
+          filter: "(objectClass=groupOfNames)"
+          userAttr: DN
+          groupAttr: member
+          nameAttr: cn
+  exec.enabled: "false"
+  resource.customizations.actions.batch_Job: |
+    discovery.lua: |
+      actions = {}
+      actions["suspend"] = {["disabled"] = true}
+      actions["resume"] = {["disabled"] = true}
+
+      local suspend = false
+      if obj.spec.suspend ~= nil then
+          suspend = obj.spec.suspend
+      end
+      if suspend then
+          actions["resume"]["disabled"] = false
+      else
+          actions["suspend"]["disabled"] = false
+      end
+      return actions
+    definitions:
+    - name: suspend
+      action.lua: |
+        obj.spec.suspend = true
+        return obj
+    - name: resume
+      action.lua: |
+        if obj.spec.suspend ~= nil and obj.spec.suspend then
+            obj.spec.suspend = false
+        end
+        return obj
+  resource.customizations.ignoreDifferences.batch_Job: |
+    jqPathExpressions:
+    - '.spec.suspend'
+  server.rbac.log.enforce.enable: "false"
+  timeout.reconciliation: "0"
+  url: https://argocd.jpmc.opsmx.net
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argocd
