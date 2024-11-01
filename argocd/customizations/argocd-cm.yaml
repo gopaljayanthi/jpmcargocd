@@ -1,6 +1,23 @@
 apiVersion: v1
 data:
   accounts.admin: login, apiKey
+  accounts.image-updater: apiKey	
+  accounts.nologs: login	
+  accounts.nosync: login
+  accounts.prodsync: login
+  accounts.uatsync: login
+  accounts.perfsync: login
+  accounts.qasync: login
+  accounts.devsync: login
+  exec.enabled: 'true'
+  server.rbac.log.enforce.enable: 'true'
+  extension.config: |-
+    extensions:
+      - name: metrics
+        backend:
+          services:
+            #- url: http://argocd-metrics-server.default.svc.cluster.local:9003
+            - url: http://argocd-metrics-server:9003
   admin.enabled: "true"
   application.instanceLabelKey: argocd.argoproj.io/instance
   dex.config: |-
@@ -30,7 +47,6 @@ data:
           userAttr: DN
           groupAttr: member
           nameAttr: cn
-  exec.enabled: "false"
   resource.customizations.actions.batch_Job: |
     discovery.lua: |
       actions = {}
